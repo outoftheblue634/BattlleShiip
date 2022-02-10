@@ -1,3 +1,8 @@
+import pickle
+import socket
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 def print_board(board):
     for i in range(10):
@@ -8,6 +13,62 @@ def print_board(board):
         print(build_str)
     print(" -----------------------------------------")
     print("  --0   1   2   3   4   5   6   7   8   9--")
+
+
+def create_boat():
+    cruiser = Boat('cruiser')
+    destroyer = Boat('cruiser')
+    aircraft = Boat('aircraft')
+    submarine = Boat('submarine')
+    recon = Boat('recon')
+
+    boat_name_dict = {1: cruiser, 2: destroyer, 3: aircraft, 4: submarine, 5: submarine}
+
+
+def valid_shot(x, y):
+    if x > 9 or x < 0:
+        return False
+    elif y > 9 or y < 0:
+        return False
+    else:
+        return True
+
+
+def take_a_shot():
+    while True:
+        x_shot = int(input("Where do you want to shoot (x): "))
+        y_shot = int(input("Where do you want to shoot (y): "))
+        if valid_shot(x_shot, y_shot):
+            break
+        else:
+            print('invalid shot')
+
+    return pickle.dumps(x_shot, y_shot)
+
+
+def receive_a_shot(received, tabb, boat_name_dict):
+    unpickled = pickle.loads(received)
+    x_received = unpickled[0]
+    y_received = unpickled[1]
+
+    if tabb[x_received, y_received] == 0:
+        s.send(pickle.dumps("Missed!"))
+
+    elif tabb[x_received, y_received] == 'X':
+        s.send(pickle.dumps("Already shot there"))
+    else:
+        boat_name_dict[tabb[x_received, y_received]].got_hit()
+        s.send(pickle.dumps("Hit!"))
+
+
+def tab_adjust(mes, tabw, x, y):
+    if pickle.loads(mes) == "Missed!":
+        tabw[x][y] = 'W'
+    elif pickle.loads(mes) == "Already shot there":
+        pass
+    elif pickle.loads(mes) == "Hit!":
+        tabw[x][y] = 'X'
+
 
 class Boat:
 
@@ -86,3 +147,12 @@ class Boat:
             playa[x][y] = self.id
             for i in range(self.health):
                 playa[x][y + i] = self.id
+
+    def is_dead(self):
+        if self.current_health == 0:
+            return True
+        else:
+            return False
+
+    def got_hit(self):
+        self.current_health -= 1
