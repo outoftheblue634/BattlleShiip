@@ -25,58 +25,96 @@ player2 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 def print_board(board):
     for i in range(10):
-        stri = "|"
-        print("-----------------------------------------")
+        build_str = f"{i} |"
+        print(" -----------------------------------------")
         for j in range(10):
-            stri += " " + str(board[i][j]) + " |"
-        print(stri)
-    print("-----------------------------------------")
+            build_str += " " + str(board[i][j]) + " |"
+        print(build_str)
+    print(" -----------------------------------------")
+    print("  --0   1   2   3   4   5   6   7   8   9--")
 
 
-class boat:
+class Boat:
 
-    def __init__(self, lives, name):
-        self.lives = lives
+    def __init__(self, name):
         self.name = name
 
-    def define_id(self):
         if self.name == 'cruiser':
             self.id = 1
+            self.health = 5
 
         elif self.name == 'destroyer':
             self.id = 2
+            self.health = 3
 
         elif self.name == 'aircraft':
             self.id = 3
+            self.health = 6
+            self.name = 'aircraft carrier'
 
         elif self.name == 'submarine':
             self.id = 4
+            self.health = 3
 
-        elif self.name == 'frigate':
+        elif self.name == 'recon':
             self.id = 5
+            self.health = 2
+            self.name = 'recon boat'
 
-    def place_boat(self, playa):
-        x = int(input(f"the 'x' placement for your {self.name}: "))
-        y = int(input(f"the 'y' placement for your {self.name}: "))
+        self.current_health = self.health
 
-        dir = input("In which direction do you want it: 'up', 'down', 'left', 'right': ")
+    def out_of_bound(self, x, y, direction):
+        if direction == 'up':
+            if x - self.health < 0:
+                return True
+        elif direction == 'down':
+            if x + self.health > 9:
+                return True
+        elif direction == 'left':
+            if y - self.health < 0:
+                return True
+        elif direction == 'right':
+            if y + self.health > 9:
+                return True
+        else:
+            return False
 
-        if dir == 'up':
+    def place(self, playa):
+
+        while True:
+            x = int(input(f"the 'x' placement for your {self.name} (0, 9): "))
+            y = int(input(f"the 'y' placement for your {self.name} (0, 9): "))
+
+            direction = input("In what direction do you want it: 'up', 'down', 'left', 'right': ")
+            if self.out_of_bound(x, y, direction):
+                print(f'This {self.name} is out of bound, please choose another place.')
+
+            else:
+                break
+
+        if direction == 'up':
             playa[x][y] = self.id
-            for i in range(self.lives):
+            for i in range(self.health):
                 playa[x - i][y] = self.id
 
-        elif dir == 'down':
+        elif direction == 'down':
             playa[x][y] = self.id
-            for i in range(self.lives):
+            for i in range(self.health):
                 playa[x + i][y] = self.id
 
-        elif dir == 'left':
+        elif direction == 'left':
             playa[x][y] = self.id
-            for i in range(self.lives):
+            for i in range(self.health):
                 playa[x][y - i] = self.id
 
-        elif dir == 'right':
+        elif direction == 'right':
             playa[x][y] = self.id
-            for i in range(self.lives):
+            for i in range(self.health):
                 playa[x][y + i] = self.id
+
+
+Bateau = Boat('recon')
+
+Bateau.place(player1)
+
+print_board(player1)
