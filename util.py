@@ -17,12 +17,12 @@ def print_board(board):
 
 def create_boat():
     cruiser = Boat('cruiser')
-    destroyer = Boat('cruiser')
+    destroyer = Boat('destroyer')
     aircraft = Boat('aircraft')
     submarine = Boat('submarine')
     recon = Boat('recon')
 
-    boat_name_dict = {1: cruiser, 2: destroyer, 3: aircraft, 4: submarine, 5: submarine}
+    boat_name_dict = {1: cruiser, 2: destroyer, 3: aircraft, 4: submarine, 5: recon}
 
 
 def valid_shot(x, y):

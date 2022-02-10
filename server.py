@@ -1,10 +1,9 @@
 import socket
 import pickle
-
+import util
 from _thread import *
 import threading
 
-Boat_name_dict = {1: 'cruiser', 2: 'destroyer', 3: 'aircraft', 4: 'submarine', 5: 'submarine'}
 
 print_lock = threading.Lock()
 
@@ -29,7 +28,7 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
+ 
 
 def threaded(c):
     while True:

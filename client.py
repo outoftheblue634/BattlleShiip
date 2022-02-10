@@ -1,6 +1,8 @@
 # Import socket module
 import socket
 import pickle
+import util
+
 TabBoat = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -22,7 +24,7 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-Boat_name_dict = {1: 'cruiser', 2: 'destroyer', 3: 'aircraft', 4: 'submarine', 5: 'submarine'}
+
 def Main():
     # local host IP '127.0.0.1'
     host = '127.0.0.1'
