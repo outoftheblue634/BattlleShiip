@@ -1,5 +1,7 @@
-print("Let's play Battleship!!")
 import util
+
+print("Let's play Battleship!!")
+
 
 player1 = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

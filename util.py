@@ -22,7 +22,15 @@ def create_boat():
     submarine = Boat('submarine')
     recon = Boat('recon')
 
-    boat_name_dict = {1: cruiser, 2: destroyer, 3: aircraft, 4: submarine, 5: recon}
+    boat_name_dict = {0: cruiser, 1: destroyer, 2: aircraft, 3: submarine, 4: recon}
+    return boat_name_dict
+
+
+def place_boats(tab, num_of_boat):
+    print_board(tab)
+    for i in range(num_of_boat - 1):
+        create_boat()[i].place(tab)
+        print_board(tab)
 
 
 def valid_shot(x, y):
@@ -34,11 +42,13 @@ def valid_shot(x, y):
         return True
 
 
-def take_a_shot():
+def take_a_shot(tab):
+    print_board(tab)
     while True:
         x_shot = int(input("Where do you want to shoot (x): "))
         y_shot = int(input("Where do you want to shoot (y): "))
         if valid_shot(x_shot, y_shot):
+            print(f'You shot at ({x_shot}, {y_shot})')
             break
         else:
             print('invalid shot')
@@ -68,6 +78,14 @@ def tab_adjust(mes, tabw, x, y):
         pass
     elif pickle.loads(mes) == "Hit!":
         tabw[x][y] = 'X'
+
+def lose_a_life(player_lives):
+    player_lives -= 1
+    if player_lives == 0:
+        return True
+    else:
+        return False
+
 
 
 class Boat:
@@ -115,7 +133,7 @@ class Boat:
         else:
             return False
 
-    def place(self, playa):
+    def place(self, player):
 
         while True:
             x = int(input(f"the 'x' placement for your {self.name} (0, 9): "))
@@ -129,24 +147,24 @@ class Boat:
                 break
 
         if direction == 'up':
-            playa[x][y] = self.id
+            player[x][y] = self.id
             for i in range(self.health):
-                playa[x - i][y] = self.id
+                player[x - i][y] = self.id
 
         elif direction == 'down':
-            playa[x][y] = self.id
+            player[x][y] = self.id
             for i in range(self.health):
-                playa[x + i][y] = self.id
+                player[x + i][y] = self.id
 
         elif direction == 'left':
-            playa[x][y] = self.id
+            player[x][y] = self.id
             for i in range(self.health):
-                playa[x][y - i] = self.id
+                player[x][y - i] = self.id
 
         elif direction == 'right':
-            playa[x][y] = self.id
+            player[x][y] = self.id
             for i in range(self.health):
-                playa[x][y + i] = self.id
+                player[x][y + i] = self.id
 
     def is_dead(self):
         if self.current_health == 0:

@@ -25,6 +25,9 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
+lives = 5
+util.place_boats(TabBoat, 2)
+
 def Main():
     # local host IP '127.0.0.1'
     host = '127.0.0.1'
@@ -42,8 +45,8 @@ def Main():
 
     while True:
         # message sent to server
-        s.send(pickle.dumps(a))
-
+        #s.send(pickle.dumps(a))
+        s.send(util.take_a_shot(TabShot))
         # message received from server
         data = s.recv(1024)
 
