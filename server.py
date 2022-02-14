@@ -28,10 +28,13 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+<<<<<<< Updated upstream
 
 lives = 5
  
 util.place_boats(TabBoat, 2)
+=======
+>>>>>>> Stashed changes
 
 def threaded(c):
     while True:
