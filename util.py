@@ -28,9 +28,12 @@ def create_boat():
 
 def place_boats(tab, num_of_boat):
     print_board(tab)
-    for i in range(num_of_boat - 1):
-        create_boat()[i].place(tab)
+    boat_name_dict = create_boat()
+    for i in range(num_of_boat):
+        boat_name_dict[i].place(tab)
         print_board(tab)
+
+    return boat_name_dict
 
 
 def valid_shot(x, y):

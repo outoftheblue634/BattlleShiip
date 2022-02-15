@@ -1,4 +1,3 @@
-# Import socket module
 import socket
 import pickle
 import util
@@ -26,7 +25,7 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 lives = 5
-util.place_boats(TabBoat, 2)
+boat_name_dict = util.place_boats(TabBoat, 2)
 
 def Main():
     # local host IP '127.0.0.1'

@@ -28,20 +28,18 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-<<<<<<< Updated upstream
 
 lives = 5
  
-util.place_boats(TabBoat, 2)
-=======
->>>>>>> Stashed changes
+boat_name_dict = util.place_boats(TabBoat, 2)
+
 
 def threaded(c):
     while True:
 
         # data received from client
         data = c.recv(1024)
-        util.receive_a_shot(data, TabBoat, util.boat_name_dict)
+        util.receive_a_shot(data, TabBoat, boat_name_dict)
         if not data:
             print('Bye')
 
