@@ -31,7 +31,7 @@ TabShot = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 lives = 5
  
-boat_name_dict = util.place_boats(TabBoat, 2)
+boat_name_dict = util.place_boats(TabBoat, 1)
 
 
 def threaded(c):
@@ -39,7 +39,7 @@ def threaded(c):
 
         # data received from client
         data = c.recv(1024)
-        util.receive_a_shot(data, TabBoat, boat_name_dict)
+
         if not data:
             print('Bye')
 
@@ -47,13 +47,8 @@ def threaded(c):
             print_lock.release()
             break
 
-        print(pickle.loads(data))
-        a = pickle.loads(data)
-        for i in range(10):
-            for j in range(10):
-                a[i][j] = 1
-        # send back reversed string to client
-        c.send(pickle.dumps(a))
+        c.send(util.receive_a_shot(data, TabBoat, boat_name_dict))
+
 
     # connection closed
     c.close()

@@ -56,22 +56,25 @@ def take_a_shot(tab):
         else:
             print('invalid shot')
 
-    return pickle.dumps(x_shot, y_shot)
+    return pickle.dumps([x_shot, y_shot])
 
 
 def receive_a_shot(received, tabb, boat_name_dict):
     unpickled = pickle.loads(received)
     x_received = unpickled[0]
     y_received = unpickled[1]
+    print(f'you got shot at {x_received}, {y_received} !')
+    if tabb[x_received][y_received] == 0:
+        print("Missed!")
+        return (pickle.dumps("Missed!"))
 
-    if tabb[x_received, y_received] == 0:
-        s.send(pickle.dumps("Missed!"))
-
-    elif tabb[x_received, y_received] == 'X':
-        s.send(pickle.dumps("Already shot there"))
+    elif tabb[x_received][y_received] == 'X':
+        print("Already shot there")
+        return (pickle.dumps("Already shot there"))
     else:
-        boat_name_dict[tabb[x_received, y_received]].got_hit()
-        s.send(pickle.dumps("Hit!"))
+        boat_name_dict[tabb[x_received][y_received]].got_hit()
+        print("Hit!")
+        return (pickle.dumps("Hit!"))
 
 
 def tab_adjust(mes, tabw, x, y):
@@ -139,8 +142,8 @@ class Boat:
     def place(self, player):
 
         while True:
-            x = int(input(f"the 'x' placement for your {self.name} (0, 9): "))
-            y = int(input(f"the 'y' placement for your {self.name} (0, 9): "))
+            x = int(input(f"the 'x' placement for your {self.name}({self.health}) (0, 9): "))
+            y = int(input(f"the 'y' placement for your {self.name}({self.health}) (0, 9): "))
 
             direction = input("In what direction do you want it: 'up', 'down', 'left', 'right': ")
             if self.out_of_bound(x, y, direction):
